@@ -13,9 +13,7 @@
 
 ## Architecture Flow Details
 
-Once User push code to __Github__ repository, Jenkins job running on k8s will get triggered inside jenkins agent with image provided
-in __Jenkinsfile__ and execute stages where Packer will use ansible provisioner to run ansible roles and setup Mysql DB and python
-flask App.
+Once User push code to __Github__ repository, Jenkins server running on k8s will get trigger job in one of jenkins k8s jenkins agent pod with image provided in __Jenkinsfile__ and execute stages where Packer will use ansible provisioner to run ansible roles which will setup Mysql DB and python flask App and create pre-baked AMI for AWS.
 
 Once Packer stage completed, terraform stage executes and using packer prebaked AMI , AWS configuration will be provisioned replacing exising ALB and autoscaling group. All stages will be executed inside __build tool__ container which will be provisioned using __multisatge Dockerfile__.
 
