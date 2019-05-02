@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    mysql_root_password: root123
+    mysql_databases:
+      - name: api
+    mysql_users:
+      - name: api
+        host: "%"
+        password: api123
+        priv: "api.*:ALL"
+    mysql_table_path: "/root/ansible-role-mysql/mysqlTable.sql"
+
+  roles:
+    - ansible-role-mysql

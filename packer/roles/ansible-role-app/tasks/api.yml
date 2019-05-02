@@ -1,0 +1,51 @@
+---
+
+- name: install supervisor packages
+  become: true
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - supervisor
+
+- name: create api directory structure
+  file:
+    path: "{{ api_dir }}"
+    state: directory
+
+- name: copy api code to executable environment
+  copy:
+    src:  /aws_api/api_code/{{ item }} 
+    dest: /root/data/
+    mode: 0755
+  with_items:
+    - "app.py"
+    - "requirements.txt"
+    - "start.sh"
+
+- name: add supervisor config file
+  template:
+    src: apiapp.j2
+    dest: /etc/supervisor/conf.d/apiapp.conf
+
+- name: install modules in a virtualenv
+  pip:
+    requirements: /root/data/requirements.txt
+    virtualenv: /root/data/flask
+    virtualenv_python: /usr/bin/python3.6
+    chdir: /root/data
+
+- name: Ensure Supervisor service started
+  service:
+    name: supervisor
+    state: started
+
+- name: Ensure Supervisor is enabled on boot
+  service:
+    name: supervisor
+    enabled: true
+
+- name: start supervisor service
+  supervisorctl:
+    name: api-flask-app
+    state: restarted

@@ -1,0 +1,3 @@
+---
+- import_playbook: install-mysql.yml
+- import_playbook: install-application.yml

@@ -1,0 +1,8 @@
+[program:api-flask-app]
+directory=/root/data/
+command=/bin/bash -E -c ./start.sh
+autostart=true
+autorestart=true
+stopsignal=INT
+stopasgroup=true
+killasgroup=true

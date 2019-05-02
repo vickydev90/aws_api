@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    tmpdir_path: /opt
+    api_dir: /root/data
+  roles:
+    - ansible-role-app
