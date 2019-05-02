@@ -2,4 +2,4 @@
 
 
 
-![](Aws_deplyment_diag.jpg)
+![AWS Deployment System Diagram](Aws_deplyment_diag.jpg)
